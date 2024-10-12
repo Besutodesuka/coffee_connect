@@ -1,0 +1,57 @@
+"use client"
+// this is rendered in client site able to use hook
+import React, {useState} from 'react'
+import Navbar from '../components/navbar'
+import Link from 'next/link'
+
+function RegisterPage() {
+
+const [name, setName] = useState('');
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [confirmPassword, setConfirmPassword] = useState('');
+const [error, setError] = useState('');
+
+const handleRegistration = async (e) => {
+    //prevent refresh
+    e.preventDefault();
+
+    if (password != confirmPassword) {
+        setError("password is not match");
+        return;
+    }
+
+    if(!name || !email || !password || !confirmPassword){
+        setError("not enough information");
+        return;
+    }
+};
+
+  return (
+    <div>
+      <Navbar/>
+      <div className='container mx-auto'>
+        <h3>Provide us information to begin coffee journey</h3>
+        <hr className='my-3'></hr>
+        <form action='' onSubmit={handleRegistration}>
+            {
+                error && (
+                    <div className='bg-red-600 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
+                        {error}
+                    </div>
+                )
+            }
+            <input onChange={(e) => setName(e.target.value)} className="block bg-gray-300 p-2 my-2 rounded-md" type="text" placeholder='Enter your Name' />
+            <input onChange={(e) => setEmail(e.target.value)} className="block bg-gray-300 p-2 my-2 rounded-md" type="email" placeholder="Enter your email Ex. coffee@example.com" />
+            <input onChange={(e) => setPassword(e.target.value)} className="block bg-gray-300 p-2 my-2 rounded-md" type="password" placeholder="Enter your password" />
+            <input onChange={(e) => setConfirmPassword(e.target.value)} className="block bg-gray-300 p-2 my-2 rounded-md" type="password" placeholder="Confirm your password" />
+            <button className="bg-green-600 p-2 rounded-md text-white" type="submit">begin the journey</button>
+        </form>
+        <hr className='my-3'></hr>
+        <p>Already stared journey yet? Continue your journey <Link className='text-yellow-700 hover:underline' href='/login'>here</Link> </p>
+      </div>
+    </div>
+  )
+}
+
+export default RegisterPage
