@@ -16,16 +16,60 @@ const handleRegistration = async (e) => {
     //prevent refresh
     e.preventDefault();
 
+    // check password
     if (password != confirmPassword) {
-        setError("password is not match");
+        setError("Password do not match!");
         return;
     }
 
-    if(!name || !email || !password || !confirmPassword){
-        setError("not enough information");
+    // check feild complete
+    if (!name || !email || !password || !confirmPassword) {
+        setError("Please complete all inputs.");
         return;
     }
-};
+
+    // try logging in first
+    const resCheckUser = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email })
+    })
+
+    const { user } = await resCheckUser.json();
+
+    // check if user is already registered 
+    if (user) { 
+        setError("User already exists.");
+        return;
+    }
+
+    // request register
+    try {
+        const res = await fetch("http://localhost:3000/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name, email, password
+            })
+        })
+
+        if (res.ok) {
+            const form = e.target;
+            setError("");
+            setSuccess("User registration successfully!");
+            form.reset();
+        } else {
+            console.log("User registration failed.")
+        }
+
+    } catch(error) {
+        console.log("Error during registration: ", error)
+    }
+}
 
   return (
     <div>
