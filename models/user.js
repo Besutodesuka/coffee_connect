@@ -1,7 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { AutoIncrement } from 'mongoose-sequence'; // Import the plugin
-
-const connection = mongoose.createConnection("your_mongodb_connection_string");
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const userSchema = new Schema(
     {
@@ -31,7 +29,7 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-userSchema.plugin(AutoIncrement, { id: 'user_seq', inc_field: 'id' });
+// userSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
-const User = connection.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;

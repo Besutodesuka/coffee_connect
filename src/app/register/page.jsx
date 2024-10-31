@@ -69,7 +69,7 @@ const handleRegistration = async (e) => {
     } catch(error) {
         console.log("Error during registration: ", error)
     }
-}
+};
 
   return (
     <div>

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import NextLogo from '../../../public/next.svg'
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
