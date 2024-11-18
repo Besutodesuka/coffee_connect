@@ -4,31 +4,38 @@ import Image from "next/image";
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-// import NextLogo from '../../public/next.svg'
 import { useSession } from "next-auth/react";
 
 export default function Home() {
-
   const { data: session } = useSession();
 
   return (
-    <main>
+    <main className="flex flex-col min-h-screen">
       <Container>
         <Navbar session={session} />
-          <div className="flex-grow text-center p-10">
-            <div className="flex justify-center my-10">
-              {/* <Image src={NextLogo} width={300} height={100} alt="NextJS Logo" /> */}
-            </div>
-            <h3 className="text-5xl">Coffee Connnect</h3>
-            <p className="text-2xl mt-3">create blood line of coffee beyond connection boundary</p>
+        
+        {/* First section */}
+        <div className="flex-grow text-center p-5">
+          <div className="flex flex-col items-center my-5">
+            <p className="text-4xl"><strong>"We connect happiness"</strong></p>
+            <img
+              className="my-5 w-64 h-64 object-cover rounded-full"
+              src="/Coffee_Connect.svg"
+              alt="Profile"
+            />
           </div>
-          <div className="flex-grow text-center p-10">
-            <h3 className="text-4xl">What is Coffee Connnect?</h3>
-            <p className="text-2xl mt-3">We connect coffee farmers and entrepreneurs who are passionate about starting coffee bean-related businesses. By offering quality control, free shipping management and cost, a transparent bidding system, direct trading relations, and the distribution of coffee samples. Coffee Connect ensures a fair solution for sourcing and trading high-quality coffee beans between farmers and entrepreneurs</p>
-          </div>
+        </div>
+
+        {/* Second section */}
+        <div className="flex-grow text-center p-5">
+          <h3 className="text-3xl"><strong>What is Coffee Connect?</strong></h3>
+          <p className="text-2xl mt-3">
+            We connect coffee farmers and entrepreneurs who are passionate about starting coffee bean-related businesses. By offering quality control, free shipping management and cost, a transparent bidding system, direct trading relations, and the distribution of coffee samples. Coffee Connect ensures a fair solution for sourcing and trading high-quality coffee beans between farmers and entrepreneurs.
+          </p>
+        </div>
+        
         <Footer />
       </Container>
     </main>
-    
   );
 }
