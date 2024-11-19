@@ -7,11 +7,15 @@ import Footer from "../components/Footer";
 import Link from 'next/link'
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation'
+import { userAgent } from 'next/server';
 
 function RegisterPage() {
 
-const [name, setName] = useState("");
+const [firstname, setFirstName] = useState("");
+const [lastname, setLastName] = useState("");
+const [username, setUserName] = useState("");
 const [email, setEmail] = useState("");
+const [dob, setDOB] = useState("");
 const [password, setPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
 const [error, setError] = useState("");
@@ -31,7 +35,7 @@ const handleRegistration = async (e) => {
     }
 
     // check feild complete
-    if (!name || !email || !password || !confirmPassword) {
+    if (!username || !firstname || !lastname || !email || !password || !confirmPassword) {
         setError("Please complete all inputs.");
         return;
     }
@@ -61,7 +65,7 @@ const handleRegistration = async (e) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name, email, password
+                username, email, firstname, lastname, dob, password
             })
         })
 
@@ -78,43 +82,154 @@ const handleRegistration = async (e) => {
         console.log("Error during registration: ", error)
     }
 };
-
-  return (
-    <Container>
-        <Navbar />
-            <div className='flex-grow'>
-                <div className="flex justify-center items-center">
-                    <div className='w-[400px] shadow-xl p-10 mt-5 rounded-xl'>
-                        <h3 className='text-3xl'>Register Page</h3>
-                        <hr className='my-3' />
-                        <form onSubmit={handleRegistration}>
-
-                            {error && (
-                                <div className='bg-red-500 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
-                                    {error}
-                                </div>
-                            )}
-
-                            {success && (
-                                <div className='bg-green-500 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
-                                    {success}
-                                </div>
-                            )}
-
-                            <input type="text" onChange={(e) => setName(e.target.value)} className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2' placeholder='Enter your name' />
-                            <input type="text" onChange={(e) => setEmail(e.target.value)} className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2' placeholder='Enter your email Ex. coffee@example.com' />
-                            <input type="password" onChange={(e) => setPassword(e.target.value)} className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2' placeholder='Enter your password' />
-                            <input type="password" onChange={(e) => setConfirmPassword(e.target.value)} className='w-full bg-gray-200 border py-2 px-3 rounded text-lg my-2' placeholder='Confirm your password' />
-                            <button type='submit' className='bg-green-500 text-white border py-2 px-3 rounded text-lg my-2'>begin the journey</button>
-                        </form>
-                        <hr className='my-3' />
-                        <p>Already stared journey yet? Continue your journey <Link className='text-yellow-700 hover:underline' href='/login'>here</Link> </p>
-                    </div>
+    return (
+        <div className="w-full h-auto relative bg-[#f0e7e0] p-4">
+            <div className="max-w-4xl mx-auto h-auto mt-10 flex flex-col items-center gap-6">
+                <img
+                className="my-10 w-64 h-64 object-cover rounded-full"
+                src="/Coffee_Connect.svg"
+                alt="Profile"
+                />
+                <form 
+                className="w-full bg-white rounded-lg border border-[#d9d9d9] p-6 flex flex-col gap-6"
+                onSubmit={handleRegistration}
+                >
+                {/* Email Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="email" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    Email
+                    </label>
+                    <input
+                    id="email"
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)} 
+                    placeholder="example@gmail.com"
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
                 </div>
+                
+                {/* First Name Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="firstName" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    First Name
+                    </label>
+                    <input
+                    id="firstName"
+                    type="text"
+                    placeholder="First Name"
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
+                </div>
+
+                {/* Last Name Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="lastName" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    Last Name
+                    </label>
+                    <input
+                    id="lastName"
+                    type="text"
+                    placeholder="Last Name"
+                    onChange={(e) => setLastName(e.target.value)} 
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
+                </div>
+
+                {/* Date of Birth Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="dob" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    Date of Birth
+                    </label>
+                    <input
+                    id="dob"
+                    type="date"
+                    onChange={(e) => setDOB(e.target.value)} 
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
+                </div>
+
+                {/* Username Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="username" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    Username
+                    </label>
+                    <input
+                    id="username"
+                    type="text"
+                    placeholder="Username"
+                    onChange={(e) => setUserName(e.target.value)} 
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
+                </div>
+
+                {/* Password Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="password" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    Password
+                    </label>
+                    <input
+                    id="password"
+                    type="password"
+                    placeholder="********"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
+                </div>
+
+                {/*Confirm Password Field */}
+                <div className="w-full flex flex-col gap-2">
+                    <label htmlFor="password" className="text-[#1e1e1e] text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    Re-enter your password
+                    </label>
+                    <input
+                    id="password"
+                    type="password"
+                    placeholder="********"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-4 py-3 bg-white rounded-lg border border-[#d9d9d9] text-sm sm:text-base font-normal font-['Public Sans'] text-[#1e1e1e] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                    required
+                    />
+                </div>
+
+                {/* Sign Up Button */}
+                <button
+                    type="submit"
+                    className="w-full h-12 bg-[#312218] text-white text-sm sm:text-base md:text-lg font-normal font-['Public Sans'] rounded-lg border border-[#2c2c2c] hover:bg-[#4a3427] focus:outline-none focus:ring-2 focus:ring-[#1b3dd6]"
+                >
+                    Sign up
+                </button>
+
+                {/* error alert */}
+                {error && (
+                    <div className='bg-red-500 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
+                        {error}
+                    </div>
+                )}
+
+                {success && (
+                    <div className='bg-green-500 w-fit text-sm text-white py-1 px-3 rounded-md mt-2'>
+                        {success}
+                    </div>
+                )}
+
+                {/* Already Have Account */}
+                <div className="w-full text-center text-sm sm:text-base md:text-lg font-normal font-['Public Sans']">
+                    <span className="text-[#1e1e1e]">Already have an account? </span>
+                    <a href="/login" className="text-[#1b3dd6] underline cursor-pointer hover:text-[#1429b5]">
+                    Sign in
+                    </a>
+                </div>
+                </form>
             </div>
-        <Footer />
-    </Container>
-  )
+        </div>
+    )
 }
 
 export default RegisterPage
