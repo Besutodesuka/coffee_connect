@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 function navbar() {
   return (
-    <nav className='bg-[#333] text-white p-5'>
+    <nav className='bg-[#312218] text-white p-5'>
         <div className='container mx-auto'>
             <div className='flex justify-between items-center'>
                 <div>
