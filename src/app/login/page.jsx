@@ -59,7 +59,7 @@ const LoginPage = () => {
             <div className="w-full bg-white rounded-lg border border-gray-300 p-6 space-y-6">
             {/* Username */}
             <div className="space-y-2">
-                <label className="text-lg font-medium text-gray-800">Username</label>
+                <label className="text-lg font-medium text-gray-800">Email</label>
                 <div className="w-full bg-white border border-gray-300 rounded-lg p-3">
                 <input
                     onChange={(e) => setEmail(e.target.value)} 
