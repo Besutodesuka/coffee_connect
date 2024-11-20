@@ -19,7 +19,7 @@ function Footer() {
           </p>
         </div>
         <div className="mt-5 flex justify-center items-center space-x-3">
-          <a href="/login">
+          <a href="/register">
             <button className="px-6 py-2 bg-white text-black border border-black rounded-full hover:bg-gray-100 transition duration-200">
               Sign up
             </button>

@@ -1,14 +1,6 @@
 "use client"
 // this is rendered in client site able to use hook
 import React, {useState} from 'react'
-import Container from "../components/Container";
-import Navbar from '../components/navbar'
-import Footer from "../components/Footer";
-import Link from 'next/link'
-import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation'
-import { userAgent } from 'next/server';
-
 function RegisterPage() {
 
 const [firstname, setFirstName] = useState("");
@@ -41,7 +33,7 @@ const handleRegistration = async (e) => {
     }
 
     // try logging in first
-    const resCheckUser = await fetch("http://localhost:3000/api/login", {
+    const resCheckUser = await fetch("/api/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -59,7 +51,7 @@ const handleRegistration = async (e) => {
 
     // request register
     try {
-        const res = await fetch("http://localhost:3000/api/register", {
+        const res = await fetch("/api/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
