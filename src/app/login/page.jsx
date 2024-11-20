@@ -1,7 +1,6 @@
 "use client"
 // this is rendered in client site able to use hook
 import React, { useState } from 'react'
-import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Link from 'next/link'
