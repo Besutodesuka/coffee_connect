@@ -82,7 +82,7 @@ const LoginPage = () => {
                     className="w-full text-gray-500 bg-transparent outline-none"
                 />
                 </div>
-                <a href="#" className="text-blue-600 underline text-lg">
+                <a href="/login/forgetPass" className="text-blue-600 underline text-lg">
                 Forgot password?
                 </a>
             </div>
