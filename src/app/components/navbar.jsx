@@ -17,7 +17,7 @@ function Navbar() {
             />
             <Link href="/" className="text-base font-bold">Home</Link>
             <span>|</span>
-            <Link href="/" className="text-base font-bold">Retail Product</Link>
+            <Link href="/home" className="text-base font-bold">Retail Product</Link>
             <span>|</span>
             <Link href="/" className="text-base font-bold">Contact Product</Link>
             <span>|</span>
