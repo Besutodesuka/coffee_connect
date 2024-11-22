@@ -100,7 +100,7 @@ const LoginPage = () => {
             </div>
             
             {/* Sign-in Button */}
-            <button className="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-gray-700 transition">
+            <button className="w-full bg-[#312218] hover:bg-amber-900 text-white py-3 rounded-lg transition">
                 Sign in
             </button>
                 {error && (
