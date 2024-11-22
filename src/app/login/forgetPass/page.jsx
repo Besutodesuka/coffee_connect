@@ -2,7 +2,7 @@
 // this is rendered on the client side to allow hook usage
 import React, { useState } from 'react';
 // import { sendPasswordResetEmail } from 'some-auth-service'; // Replace with your actual email sending service
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 const ForgetPasswordPage = () => {
     const [email, setEmail] = useState("");
@@ -13,27 +13,45 @@ const ForgetPasswordPage = () => {
     const router = useRouter();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setErrorMessage("");
-        setSuccessMessage("");
-
-        try {
-            // Mock function for sending email
-            // await sendPasswordResetEmail(email); // Replace with your actual service logic
-            
-            setSuccessMessage("A password reset link has been sent to your email.");
-        } catch (error) {
-            console.error("Error sending password reset email:", error);
-            setErrorMessage("Failed to send reset link. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
+      e.preventDefault();
+      setLoading(true);
+      setErrorMessage("");
+      setSuccessMessage("");
+  
+      try {
+          const response = await fetch('/api/send-otp', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email }),
+          });
+  
+          const data = await response.json();
+  
+          if (response.ok) {
+              setSuccessMessage(data.message); // OTP sent successfully
+          } else {
+              throw new Error(data.message);
+          }
+      } catch (error) {
+          console.error("Error sending OTP:", error);
+          setErrorMessage(error.message || "An error occurred. Please try again.");
+      } finally {
+          setLoading(false);
+      }
+  };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#F0E7E0]">
-            <div className="flex flex-col items-center gap-9 w-full max-w-md px-6 sm:px-0">
+            <div className="flex flex-col items-center gap-6 w-full max-w-md px-6 sm:px-0">
+                {/* Profile Image */}
+                <img
+                className="w-64 h-64 object-cover rounded-full"
+                src="/Coffee_Connect.svg"
+                alt="Profile"
+                />
+                <form onSubmit={handleSubmit}></form>
                 {/* Page Title */}
                 <h1 className="text-3xl font-bold text-gray-800 mb-6">
                     Forgot Password
@@ -57,7 +75,7 @@ const ForgetPasswordPage = () => {
                     <button
                         type="submit"
                         className={`w-full py-3 rounded-lg ${
-                            loading ? "bg-gray-400 cursor-not-allowed" : "bg-gray-800 hover:bg-gray-700"
+                            loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#312218] hover:bg-amber-900"
                         } text-white transition`}
                         disabled={loading}
                     >
