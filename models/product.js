@@ -43,10 +43,12 @@ const productSchema = new Schema(
         },
         // TODO:add pipeline support adding preview picture in the future
         // TODO: if picture not found show the preview place holder instead
-        preview: {
-            type: Image,
-            required: false
-        },
+        // !: ref https://www.geeksforgeeks.org/upload-and-retrieve-image-on-mongodb-using-mongoose/
+        // preview: {
+        //     type: Image,
+        //     required: false,
+        //     default: null
+        // },
     },
     { timestamps: true }
 );
