@@ -14,6 +14,7 @@ import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 
 import { IoIosClose } from "react-icons/io";
+import _ from 'lodash';
 
 function Sidebar({Quality ,SetQuality, updateFilter, SetMaxPrice, SetMinPrice, clearFilter}) {
   return (
@@ -176,9 +177,20 @@ export default function Home() {
   }
   }
 
-  function SortProduct(by, direction){
-    
+  function SortProduct(by, direction) {
+    //TODO: make this work
+    if (by !== 'none') {
+      const array = [...products]; // Assume 'products' is your state variable
+      const mode = direction === 'Ascending' ? 'asc' : 'desc';
+      const sortedArray = _.orderBy(array, [by], [mode]);
+      console.log(sortedArray);
+      setProducts(sortedArray); // Assume 'setProducts' is your state updater
+    }
   }
+
+  useEffect(() => {
+    SortProduct(SortOptions, SortDirection);
+  }, [SortOptions, SortDirection]);
   // SetFilterOptions();
   function removeFilter(filter_name){
     const array = FilterOptions.filter((filter) => filter !== filter_name);
@@ -377,12 +389,18 @@ export default function Home() {
             <div className="relative">
               <select 
               className="block appearance-none w-full bg-white border border-[#e4e7e9] px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              onSelect={(e) => SetSortOptions(e.target.value)}
-              defaultValue={"none"}
+              onChange={
+                (e) => {
+                  SetSortOptions(e.target.value)
+                  SortProduct(e.target.value, SortDirection);
+                }
+              }
+              value={SortOptions}
+              defaultValue="none"
               >
-                <option>none</option>
-                <option>grade</option>
-                <option>price</option>
+                <option value="none">none</option>
+                <option value="grade">grade</option>
+                <option value="price">price</option>
                 {/* Other options */}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -394,12 +412,13 @@ export default function Home() {
             <div className="relative">
               <select 
               className="block appearance-none w-full bg-white border border-[#e4e7e9] px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              onSelect={(e) =>{ 
+              onChange={(e) =>{ 
                 SetSortDirection(e.target.value)
                 // call product sortings function
-
+                SortProduct(SortOptions, e.target.value);
               }}
-              defaultValue={"Ascending"}
+              value={SortDirection}
+              defaultValue="Ascending"
               >
                 <option>Ascending</option>
                 <option>Decending</option>
