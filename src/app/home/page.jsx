@@ -15,8 +15,83 @@ import { redirect, useRouter } from "next/navigation";
 
 import { IoIosClose } from "react-icons/io";
 
+function Sidebar({Quality ,SetQuality, updateFilter, SetMaxPrice, SetMinPrice, clearFilter}) {
+  return (
+    <aside className="w-full md:w-1/4 lg:w-1/5 px-4 py-10 bg-[#F8F4F1]">
+      <form onSubmit={updateFilter}>
+      <div className="flex flex-col gap-4">
+        <div className="text-[#191c1e] text-xl font-normal font-['Public Sans']">
+          QUALITY
+        </div>
+        <div className="flex flex-col gap-3">
+            {[5, 4, 3, 2, 1].map((stars, index) => (
+              <div key={index} className="flex col-auto text-black">
+                <input
+                className="p-2 mx-2"
+                  type="radio"  
+                  value={stars}
+                  id={index} 
+                  checked={Quality == stars}
+                  onChange={() => {
+                    SetQuality(stars)
+                  }}
+                />
+                <StarRate score={stars}/>
+                {(index !== 0) && 
+                <label className="mx-2">or more</label>}
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="my-6 border-t border-[#312218]/50"></div>
+
+      {/* PRICE RANGE */}
+      <div className="flex flex-col gap-4">
+        <div className="text-[#191c1e] text-xl font-normal font-['Public Sans']">
+          PRICE RANGE
+        </div>
+        <div className="flex items-center gap-3">
+          <input
+            onChange={(e) => SetMinPrice(e.target.value)} 
+            type="number"
+            placeholder="Min price"
+            className="w-1/2 px-4 py-2 bg-white rounded-sm border border-[#e4e7e9] text-[#76868e] text-base font-normal font-['Public Sans'] focus:outline-none"
+          />
+          <input
+            onChange={(e) => SetMaxPrice(e.target.value)} 
+            type="number"
+            placeholder="Max price"
+            className="w-1/2 px-4 py-2 bg-white rounded-sm border border-[#e4e7e9] text-[#76868e] text-base font-normal font-['Public Sans'] focus:outline-none"
+          />
+        </div>
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+          <button 
+          type="submit"
+          className="w-1/2 px-4 py-2 bg-green-300 rounded-xl border border-[#e4e7e9] text-base font-normal font-['Public Sans'] focus:outline-none"
+          >
+              apply
+          </button>
+          <button 
+          type="reset" 
+          onClick={() => {
+            clearFilter()
+            }}
+          className="w-1/2 px-4 py-2 bg-red-400 rounded-xl border border-[#e4e7e9] text-base font-normal font-['Public Sans'] focus:outline-none"
+            >
+              clear
+          </button>
+        </div>
+      </form>
+    </aside>
+  );
+}
+
 export default function Home() {
   const [SortOptions, SetSortOptions] = useState([]);
+  const [SortDirection, SetSortDirection] = useState([]);
   const [FilterOptions, SetFilterOptions] = useState([]);
 
     // Initialize products state
@@ -37,59 +112,129 @@ export default function Home() {
   // Fetch products when the component mounts
   const hasFetchedProducts = useRef(false);
 
+  async function fetchProducts() {
+    try {
+      const res = await fetch('/api/product/search/queryall', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await res.json();
+      console.log(data)
+
+      if (Array.isArray(data)) {
+        setProducts(data);
+      } else if (Array.isArray(data.products)) {
+        setProducts(data.products);
+      } else {
+        throw new Error('invalid error type');
+      }
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    }
+  }
+
   useEffect(() => {
     if (hasFetchedProducts.current) return;
     hasFetchedProducts.current = true;
 
-    async function fetchProducts() {
-      try {
-        const res = await fetch('/api/product/search/queryall', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setProducts(data);
-        } else if (Array.isArray(data.products)) {
-          setProducts(data.products);
-        } else {
-          throw new Error('Invalid data format');
-        }
-      } catch (error) {
-        console.error('Failed to fetch products:', error);
-      }
-    }
-
     fetchProducts();
   }, []);
 
+  const updateProduct = async (e) => {
+    // trigger product list update fetch by these criteria
+    const resFilteredProduct = await fetch("/api/product/search/filter", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify( {minPrice: MinPrice, maxPrice: MaxPrice, quality: Quality} )
+  })
+
+  const FilteredProduct = await resFilteredProduct.json();
+  
+  console.log(FilteredProduct)
+  // if response is not array then cast them
+  try {
+    if (Array.isArray(FilteredProduct)) {
+      setProducts(FilteredProduct);
+    } 
+    else if (Array.isArray(FilteredProduct.products)) {
+      setProducts(FilteredProduct.products);
+    } 
+    else {
+      setProducts([]);
+    }
+  } catch (err){
+    console.error('Failed to fetch products:', err);
+  }
+  }
+
+  function SortProduct(by, direction){
+    
+  }
   // SetFilterOptions();
   function removeFilter(filter_name){
     const array = FilterOptions.filter((filter) => filter !== filter_name);
     SetFilterOptions(array);
+    // reset form
+    const regex_quaility = /⭐/;
+    if (regex_quaility.test(filter_name)){
+      SetQuality(null);
+    }
+    const regex_minprice = /Price <=/;
+    if (regex_minprice.test(filter_name)){
+      SetMinPrice(null);
+    }
+    const regex_maxprice = /Price >=/;
+    if (regex_maxprice.test(filter_name)){
+      SetMaxPrice(null);
+    }
+    // call update
+    if (FilterOptions.length > 0){
+      fetchProducts();
+    }else{
+      updateProduct();
+    }
   }
 
-  const updateFilter = (e) =>{
-    e.preventDefault();
+  const updateFilter = async (e) => {
+    try{
+      e.preventDefault();
+    }catch(err){
+      console.log(err);
+    }
     var array = [];
     if (MaxPrice && MaxPrice >= 0){
-      array.push("Price <= ${MaxPrice}")
+      array.push(`Price <= ${MaxPrice}`)
     }
     if (MinPrice && MinPrice >= 0){
-      array.push('Price >= ${MinPrice}')
+      array.push(`Price >= ${MinPrice}`)
     }
     if (Quality){
       array.push("⭐".repeat(Quality))
     }
-    console.log({array})
+
     SetFilterOptions(array);
+    updateProduct();
+  }
+
+  function resetState(){
+    SetMaxPrice(null);
+    SetMinPrice(null);
+    SetQuality(null);
+  } 
+
+  function clearFilter(){
+    SetFilterOptions([]);
+    fetchProducts();
+    resetState()
   }
 
   // ! not clear from class diagram pendding review
@@ -206,61 +351,6 @@ export default function Home() {
 
 // {/* Divider */}
 // <div className="my-6 border-t border-[#312218]/50"></div>
-  function Sidebar() {
-    return (
-      <aside className="w-full md:w-1/4 lg:w-1/5 px-4 py-10 bg-[#F8F4F1]">
-        <div className="flex flex-col gap-4">
-          <div className="text-[#191c1e] text-xl font-normal font-['Public Sans']">
-            QUALITY
-          </div>
-          <div className="flex flex-col gap-3">
-              {[5, 4, 3, 2, 1].map((stars, index) => (
-                <div key={index} className="flex col-auto text-black">
-                  <input
-                  className="p-2 mx-2"
-                    type="radio"  
-                    value={stars}
-                    id={index} 
-                    // checked={}
-                    onChange={() => SetQuality(stars)}
-                  />
-                  <StarRate score={stars}/>
-                  {(index !== 0) && 
-                  <label className="mx-2">or more</label>}
-                </div>
-              ))}
-          </div>
-        </div>
-  
-        {/* Divider */}
-        <div className="my-6 border-t border-[#312218]/50"></div>
-  
-        {/* PRICE RANGE */}
-        <div className="flex flex-col gap-4">
-          <div className="text-[#191c1e] text-xl font-normal font-['Public Sans']">
-            PRICE RANGE
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              onChange={(e) => SetMinPrice(e.target.value)} 
-              type="number"
-              placeholder="Min price"
-              className="w-1/2 px-4 py-2 bg-white rounded-sm border border-[#e4e7e9] text-[#76868e] text-base font-normal font-['Public Sans'] focus:outline-none"
-            />
-            <input
-              onChange={(e) => SetMaxPrice(e.target.value)} 
-              type="number"
-              placeholder="Max price"
-              className="w-1/2 px-4 py-2 bg-white rounded-sm border border-[#e4e7e9] text-[#76868e] text-base font-normal font-['Public Sans'] focus:outline-none"
-            />
-          </div>
-          <button onClick={updateFilter}>
-              apply
-          </button>
-        </div>
-      </aside>
-    );
-  }
           //  <div className="flex flex-col gap-3">
           //   {['All Price', 'Under $20', '$25 to $100', '$100 to $300'].map((priceRange, index) => (
           //     <div key={index} className="flex items-center gap-2">
@@ -287,10 +377,32 @@ export default function Home() {
             <div className="relative">
               <select 
               className="block appearance-none w-full bg-white border border-[#e4e7e9] px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              onSelect={(e) => SetSortOptions(e.target.value)} 
+              onSelect={(e) => SetSortOptions(e.target.value)}
+              defaultValue={"none"}
               >
+                <option>none</option>
                 <option>grade</option>
                 <option>price</option>
+                {/* Other options */}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                {/* Down Arrow Icon */}
+                
+                {/* Replace with actual icon */}
+              </div>
+            </div>
+            <div className="relative">
+              <select 
+              className="block appearance-none w-full bg-white border border-[#e4e7e9] px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              onSelect={(e) =>{ 
+                SetSortDirection(e.target.value)
+                // call product sortings function
+
+              }}
+              defaultValue={"Ascending"}
+              >
+                <option>Ascending</option>
+                <option>Decending</option>
                 {/* Other options */}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -323,7 +435,9 @@ export default function Home() {
             <div key={index} className="flex items-center gap-1.5">
               <div className='flex col-auto rounded-3xl p-2 bg-green-200'>
                 <label classname="mx-2">{filter}</label>
-                <button onClick={() => removeFilter(filter)}>
+                <button onClick={() =>{
+                  removeFilter(filter)
+                  }}>
                     <IoIosClose />
                 </button>
               </div>
@@ -377,7 +491,14 @@ export default function Home() {
         {/* Main Content */}
         <div className="flex flex-wrap">
           {/* Sidebar */}
-          <Sidebar />
+          <Sidebar 
+          Quality={Quality}
+          SetQuality={SetQuality}
+          updateFilter={updateFilter}
+          SetMaxPrice={SetMaxPrice}
+          SetMinPrice={SetMinPrice}
+          clearFilter={clearFilter}
+          />
           {/* Products Section */}
           <div className="w-full md:w-3/4 lg:w-4/5 px-4">
             <ProductsGrid products={products}/>
