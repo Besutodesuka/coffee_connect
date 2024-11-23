@@ -1,9 +1,12 @@
 "use client";
 // this is rendered on the client side to allow hook usage
 import React, { useState } from 'react';
+import { useSearchParams } from "next/navigation";
 import { redirect, useRouter } from 'next/navigation';
 
-const ForgetPasswordPage = () => {
+const verificationPage = () => {
+    const searchParams = useSearchParams();
+    const email = searchParams.get("email"); // Extract email from query string
     const [OTP, setOTP] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -11,15 +14,17 @@ const ForgetPasswordPage = () => {
     const [Count, SetCount] = useState(0);
 
     const router = useRouter();
+    
 
     const handleSubmit = async (e) => {
+        
       e.preventDefault();
       setLoading(true);
       setErrorMessage("");
       setSuccessMessage("");
-  
+      console.log(email)
       try {
-        if(OTP == 999999) router.replace('/login/ResetPass');
+        if(OTP == 999999) router.replace(`/login/ResetPass?email=${encodeURIComponent(email)}`);
         else {
             setErrorMessage(`Mismatch OTP. Please try again. [${Count}]`);
             SetCount(Count + 1);
@@ -92,4 +97,4 @@ const ForgetPasswordPage = () => {
     );
 };
 
-export default ForgetPasswordPage;
+export default verificationPage;
