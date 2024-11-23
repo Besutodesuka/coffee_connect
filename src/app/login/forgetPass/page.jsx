@@ -13,50 +13,54 @@ const ForgetPasswordPage = () => {
     const router = useRouter();
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      setErrorMessage("");
-      setSuccessMessage("");
-  
-      try {
-          const response = await fetch('/api/send-otp', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ email }),
-          });
-  
-          const data = await response.json();
-  
-          if (response.ok) {
-              setSuccessMessage(data.message); // OTP sent successfully
-          } else {
-              throw new Error(data.message);
-          }
-      } catch (error) {
-          console.error("Error sending OTP:", error);
-          setErrorMessage(error.message || "An error occurred. Please try again.");
-      } finally {
-          setLoading(false);
-      }
-  };
+        e.preventDefault();
+        setLoading(true);
+        setErrorMessage("");
+        setSuccessMessage("");
+    
+        try {
+            const response = await fetch("/api/check-email/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setSuccessMessage("Email found! Redirecting...");
+                setTimeout(() => {
+                    router.replace("../login/verification");
+                }, 2000);
+            } else {
+                throw new Error(data.message || "Email not found");
+            }
+        } catch (error) {
+            console.error("Error validating email:", error);
+            setErrorMessage(error.message || "An error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#F0E7E0]">
             <div className="flex flex-col items-center gap-6 w-full max-w-md px-6 sm:px-0">
                 {/* Profile Image */}
                 <img
-                className="w-64 h-64 object-cover rounded-full"
-                src="/Coffee_Connect.svg"
-                alt="Profile"
+                    className="w-64 h-64 object-cover rounded-full"
+                    src="/Coffee_Connect.svg"
+                    alt="Profile"
                 />
-                <form onSubmit={handleSubmit}></form>
                 {/* Page Title */}
-                <h1 className="text-3xl font-bold text-gray-800 mb-6">
-                    Forgot Password
-                </h1>
-                <form onSubmit={handleSubmit} className="w-full bg-white rounded-lg border border-gray-300 p-6 space-y-6">
+                <h1 className="text-3xl font-bold text-gray-800 mb-6">Forgot Password</h1>
+                <form
+                    onSubmit={handleSubmit}
+                    className="w-full bg-white rounded-lg border border-gray-300 p-6 space-y-6"
+                >
                     {/* Email Input */}
                     <div className="space-y-2">
                         <label className="text-lg font-medium text-gray-800">Email Address</label>
@@ -92,7 +96,7 @@ const ForgetPasswordPage = () => {
                 </form>
                 {/* Back to Login Link */}
                 <p className="text-center text-lg">
-                    Remembered your password?{' '}
+                    Remembered your password?{" "}
                     <a href="/login" className="text-blue-600 underline">
                         Sign in
                     </a>

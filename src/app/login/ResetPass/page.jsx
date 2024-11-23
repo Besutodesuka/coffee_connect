@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 
 const ForgetPasswordPage = () => {
-    const [OTP, setOTP] = useState("");
+    const [newpassword, setNewpassword] = useState("");
+    const [ConfirmPass, setConfirmPass] = useState("");
+
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -19,9 +21,9 @@ const ForgetPasswordPage = () => {
       setSuccessMessage("");
   
       try {
-        if(OTP == 999999) router.replace('/login/ResetPass');
+        if(ConfirmPass == newpassword) router.replace('/login');
         else {
-            setErrorMessage(`Mismatch OTP. Please try again. [${Count}]`);
+            setErrorMessage(`Mismatch Password. Please try again. [${Count}]`);
             SetCount(Count + 1);
         }
       } catch (error) {
@@ -44,23 +46,38 @@ const ForgetPasswordPage = () => {
                 <form onSubmit={handleSubmit}></form>
                 {/* Page Title */}
                 <h1 className="text-3xl font-bold text-gray-800 mb-6">
-                    Verification
+                    Reset Password
                 </h1>
                 <form onSubmit={handleSubmit} className="w-full bg-white rounded-lg border border-gray-300 p-6 space-y-6">
-                    {/* Email Input */}
+                    {/* New Password Input */}
                     <div className="space-y-2">
-                        <label className="text-lg font-medium text-gray-800">OTP</label>
+                        <label className="text-lg font-medium text-gray-800">New Password</label>
                         <div className="w-full bg-white border border-gray-300 rounded-lg p-3">
                             <input
-                                type="int"
-                                placeholder="Enter OTP Ex. 999999"
-                                onChange={(e) => setOTP(e.target.value)}
-                                value={OTP}
+                                type="text"
+                                placeholder="Enter New Password"
+                                onChange={(e) => setNewpassword(e.target.value)}
+                                value={newpassword}
                                 className="w-full text-gray-500 bg-transparent outline-none"
                                 required
                             />
                         </div>
                     </div>
+                    {/* Confirm Password Input */}
+                    <div className="space-y-2">
+                        <label className="text-lg font-medium text-gray-800">Confirm Password</label>
+                        <div className="w-full bg-white border border-gray-300 rounded-lg p-3">
+                            <input
+                                type="text"
+                                placeholder="Confirm Password"
+                                onChange={(e) => setConfirmPass(e.target.value)}
+                                value={ConfirmPass}
+                                className="w-full text-gray-500 bg-transparent outline-none"
+                                required
+                            />
+                        </div>
+                    </div>
+
                     {/* Submit Button */}
                     <button
                         type="submit"
