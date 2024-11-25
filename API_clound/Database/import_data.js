@@ -34,36 +34,59 @@ const supplierSchema = new mongoose.Schema(
 
 const productSchema = new mongoose.Schema(
   {
-      supplier_id: {
-          type: Number,
-          required: true
-      },
-      product_name: {
-          type: String,
-          required: true
-      },
-      grade: {
-          type: Number,
-          required: true
-      },
-      quantity: {
-          type: Number,
-          required: true
-      },
-      price: {
-          type: Number,
-          required: true
-      },
-      measure_date: {
-          type: Date,
-          required: true
-      },
-      exp_date: {
-          type: Date,
-          required: true
-      },
+    supplier_id: {
+      type: Number,
+      required: true
   },
-  { timestamps: true }
+  product_name: {
+      type: String,
+      required: true
+  },
+  grade: {
+      type: Number,
+      required: true
+  },
+  quantity: {
+      type: Number,
+      required: true
+  },
+  price: {
+      type: Number,
+      required: true
+  },
+  measure_date: {
+      type: Date,
+      required: true
+  },
+  exp_date: {
+      type: Date,
+      required: true
+  },
+  description: {
+      type: String,
+      required: true
+  },
+  weight: {
+      type: Number,
+      required: true
+  },
+  bean_type: {
+      type: String,
+      enum: ['Arabica', 'Robusta'], // Limit values to specific types
+      required: true
+  },
+  region: {
+      type: String,
+      enum: ['Northern', 'Northeastern', 'Eastern', 'Central', 'Western', 'Southern'], // Limit to specified regions
+      required: true
+  },
+  soil_type: {
+      type: String,
+      enum: ['Peat-based Soil', 'Coconut Coir', 'Compost', 'Sand-Based Soil'], // Limit to specified soil types
+      required: true
+  }
+},
+{ timestamps: true }
 );
 const Supplier = mongoose.model("Supplier", supplierSchema);
 const Product = mongoose.model("Product", productSchema);

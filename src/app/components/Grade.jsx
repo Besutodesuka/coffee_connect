@@ -5,7 +5,7 @@ function StarRate({score}){
 
     // const [rating, score]
     return(
-        <div className="flex items-center justify-center gap-1">
+        <div className="flex items-start justify-start gap-1">
             {[...Array(5)].map((_, index) => (<FaStar
                     key={index}
                     className="transition-all"
