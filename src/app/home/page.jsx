@@ -485,8 +485,9 @@ export default function Home() {
           {products && products.map((product, index) => (
             <CoffeeCard 
             key = {index}
+            _id = {product._id}
             name={product.product_name}
-            image={null} 
+            image="/Coffee_Product.svg"
             grade={product.grade}
             price={product.price}
               />
