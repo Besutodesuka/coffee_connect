@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/API_clound/Database/data/db
 /.pnp
 .pnp.js
 .yarn/install-state.gz

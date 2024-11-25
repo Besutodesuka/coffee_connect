@@ -81,7 +81,7 @@ const LoginPage = () => {
                     className="w-full text-gray-500 bg-transparent outline-none"
                 />
                 </div>
-                <a href="#" className="text-blue-600 underline text-lg">
+                <a href="/login/forgetPass" className="text-blue-600 underline text-lg">
                 Forgot password?
                 </a>
             </div>
@@ -99,7 +99,7 @@ const LoginPage = () => {
             </div>
             
             {/* Sign-in Button */}
-            <button className="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-gray-700 transition">
+            <button className="w-full bg-[#312218] hover:bg-amber-900 text-white py-3 rounded-lg transition">
                 Sign in
             </button>
                 {error && (
