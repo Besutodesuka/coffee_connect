@@ -1,6 +1,5 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/navbar";
 import Footer from "../../../components/Footer";
 import { useSession } from "next-auth/react";
@@ -12,22 +11,24 @@ const ProductDetail = ({ params }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [quantity, setQuantity] = useState(1); // Quantity state
-  const [purchaseType, setPurchaseType] = useState('retail'); // Purchase type state
+  const [quantity, setQuantity] = useState(1); // Quantity state for retail view
+  const [weight, setWeight] = useState(1); // Weight state for contract view
+  const [months, setMonths] = useState(1); // Months state for contract view
+  const [viewMode, setViewMode] = useState("retail"); // View mode: 'retail' or 'contract'
 
   const { data: session, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (status === 'loading') return;
-    if (!session) router.push('/login');
+    if (status === "loading") return;
+    if (!session) router.push("/login");
   }, [session, status, router]);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`/api/product/search/${ProductID}`);
-        if (!res.ok) throw new Error('Failed to fetch product data');
+        if (!res.ok) throw new Error("Failed to fetch product data");
         const data = await res.json();
         setProduct(data);
       } catch (err) {
@@ -43,8 +44,16 @@ const ProductDetail = ({ params }) => {
     setQuantity((prev) => Math.max(1, prev + change));
   };
 
-  const handlePurchaseTypeChange = (type) => {
-    setPurchaseType(type);
+  const handleWeightChange = (change) => {
+    setWeight((prev) => Math.max(1, prev + change));
+  };
+
+  const handleMonthsChange = (change) => {
+    setMonths((prev) => Math.max(1, prev + change));
+  };
+
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode); // Toggle between 'retail' and 'contract'
   };
 
   if (error) {
@@ -63,7 +72,7 @@ const ProductDetail = ({ params }) => {
           {/* Product Image */}
           <div className="w-1/3">
             <img
-              src={product.image || '/Coffee_Product.svg'}
+              src={product.image || "/Coffee_Product.svg"}
               alt={product.product_name}
               className="rounded-lg w-full"
             />
@@ -86,85 +95,160 @@ const ProductDetail = ({ params }) => {
             <div className="flex items-center gap-4 mt-4">
               <button
                 className={`px-4 py-2 rounded-lg border ${
-                  purchaseType === 'retail'
-                    ? 'bg-orange-500 text-white'
-                    : 'border-gray-600 text-gray-600'
+                  viewMode === "retail"
+                    ? "bg-orange-500 text-white"
+                    : "border-gray-600 text-gray-600"
                 }`}
-                onClick={() => handlePurchaseTypeChange('retail')}
+                onClick={() => handleViewModeChange("retail")}
               >
                 RETAIL PURCHASE
               </button>
               <button
                 className={`px-4 py-2 rounded-lg border ${
-                  purchaseType === 'contract'
-                    ? 'bg-orange-500 text-white'
-                    : 'border-gray-600 text-gray-600'
+                  viewMode === "contract"
+                    ? "bg-orange-500 text-white"
+                    : "border-gray-600 text-gray-600"
                 }`}
-                onClick={() => handlePurchaseTypeChange('contract')}
+                onClick={() => handleViewModeChange("contract")}
               >
                 CONTRACT
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <div>
-                <p className="text-sm font-semibold">Weight:</p>
-                <p className="text-gray-600">{product.weight}g</p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Coffee beans type:</p>
-                <p className="text-gray-600">{product.bean_type}</p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Region:</p>
-                <p className="text-gray-600">{product.region}</p>
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Soil type:</p>
-                <p className="text-gray-600">{product.soil_type}</p>
-              </div>
-            </div>
-
-            {/* Quantity Selector and Actions */}
-            <div className="mt-6">
-              {/* Stock Quantity */}
-              <p className="text-gray-600 text-sm font-medium">
-                Available Quantity: <span className="font-semibold">{product.quantity}</span>
-              </p>
-
-              <div className="flex items-center gap-4 mt-2">
-                <div className="flex items-center border border-gray-600 rounded-lg">
-                  <button
-                    className="px-4 py-2 text-gray-600"
-                    onClick={() => handleQuantityChange(-1)}
-                  >
-                    -
+            {/* Conditional UI Based on View Mode */}
+            {viewMode === "retail" ? (
+              // Retail View
+              <div className="mt-6">
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm font-semibold">Weight:</p>
+                    <p className="text-gray-600">{product.weight}g</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Coffee beans type:</p>
+                    <p className="text-gray-600">{product.bean_type}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Region:</p>
+                    <p className="text-gray-600">{product.region}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Soil type:</p>
+                    <p className="text-gray-600">{product.soil_type}</p>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm font-semibold pt-3">
+                  Available Quantity:{" "}
+                  <span className="font-normal">{product.quantity}</span>
+                </p>
+                <div className="flex items-center gap-4 mt-2">
+                  <div className="flex items-center border border-gray-600 rounded-lg">
+                    <button
+                      className="px-4 py-2 text-gray-600"
+                      onClick={() => handleQuantityChange(-1)}
+                    >
+                      -
+                    </button>
+                    <span className="px-6 py-2">{quantity}</span>
+                    <button
+                      className="px-4 py-2 text-gray-600"
+                      onClick={() => handleQuantityChange(1)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600">
+                    ADD TO CART
                   </button>
-                  <span className="px-6 py-2">{quantity}</span>
-                  <button
-                    className="px-4 py-2 text-gray-600"
-                    onClick={() => handleQuantityChange(1)}
-                  >
-                    +
+                  <button className="border border-gray-600 px-6 py-2 rounded-lg hover:bg-gray-100">
+                    BUY NOW
                   </button>
                 </div>
-                <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600">
-                  ADD TO CART
-                </button>
-                <button className="border border-gray-600 px-6 py-2 rounded-lg hover:bg-gray-100">
-                  BUY NOW
+              </div>
+            ) : (
+              // Contract View
+              <div className="mt-6">
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p className="text-sm font-semibold">Coffee beans type:</p>
+                    <p className="text-gray-600">{product.bean_type}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Region:</p>
+                    <p className="text-gray-600">{product.region}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Soil type:</p>
+                    <p className="text-gray-600">{product.soil_type}</p>
+                  </div>
+                </div>
+
+                <div className="flex-col grid grid-cols-2 gap-4 pt-3 pb-7">
+                  <div>
+                    <p className="text-sm font-semibold">Range:</p>
+                    <div className="flex items-center gap-2">
+                      <button
+                        className="border px-2 py-1 text-gray-600"
+                        onClick={() => handleMonthsChange(-1)}
+                      >
+                        -
+                      </button>
+                      <span>{months}</span>
+                      <button
+                        className="border px-2 py-1 text-gray-600"
+                        onClick={() => handleMonthsChange(1)}
+                      >
+                        +
+                      </button>
+                      <span>months</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Weight:</p>
+                    <div className="flex items-center gap-2">
+                      <button
+                        className="border px-2 py-1 text-gray-600"
+                        onClick={() => handleWeightChange(-1)}
+                      >
+                        -
+                      </button>
+                      <span>{weight}</span>
+                      <button
+                        className="border px-2 py-1 text-gray-600"
+                        onClick={() => handleWeightChange(1)}
+                      >
+                        +
+                      </button>
+                      <span>kilograms</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Starts at:</p>
+                    <input
+                      type="date"
+                      className="border px-4 py-2 rounded-lg"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">Meet-up Date:</p>
+                    <input
+                      type="date"
+                      className="border px-4 py-2 rounded-lg"
+                    />
+                  </div>
+                </div>
+                <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 w-9/12">
+                  MEET UP
                 </button>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
         {/* Description */}
         <div className="mt-12">
           <h2 className="text-lg font-semibold mb-4">Description</h2>
-          <p className="text-gray-600">
-            {product.description}
-          </p>
+          <p className="text-gray-600">{product.description}</p>
         </div>
       </div>
       <Footer />
