@@ -2,13 +2,13 @@
 import React from 'react';
 import Link from 'next/link'; // Import the Link component
 import StarRate from './Grade';
+import { stringify } from 'postcss';
 
-function CoffeeCard({ name, grade, price, image }) {
+function CoffeeCard({ _id, name, grade, price, image }) {
   // Convert product name to a URL-friendly format (lowercase and hyphens instead of spaces)
-  const productNameSlug = name.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <Link href={`/ProductDetail/${productNameSlug}`} passHref>
+    <Link href={`/home/ProductDetail/${_id}`} passHref>
       <div className="max-w-sm mx-auto relative rounded-lg cursor-pointer">
         <div className="w-full h-auto bg-white rounded-[20px] border-2 border-[#d9d9d9] p-4 flex flex-col items-center">
           {image && (
