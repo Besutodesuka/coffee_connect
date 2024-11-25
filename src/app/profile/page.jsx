@@ -1,11 +1,11 @@
 "use client"
 
-import React from "react";
-import Navbar from "../components/Navbar";
+import React, { useEffect, useState } from "react";
+import Navbar from "../components/navbar";
 import Footer from "../components/Footer";
-import { signOut } from "next-auth/react";
-import { useRouter, redirect } from 'next/navigation'
+import { getSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 // const ProfileSection = () => (
 //   <section className="mt-10 mx-auto max-w-4xl p-6 bg-white rounded-lg shadow-md">
@@ -52,13 +52,50 @@ import Link from "next/link";
 //   </section>
 // );
 
-
-import { useState } from "react";
-
 const ProfileSection = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [profilePicture, setProfilePicture] = useState("/Coffee_Connect.svg");
+
+  const { data: session, status } = useSession();
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      fetch("/api/profile/")
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch user data");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setUserData(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading(false);
+          console.error("Error fetching user data:", err);
+        });
+    }
+  }, [session?.user?.email]);
+  // Loading state
+  if (status === "loading" || loading) {
+    return <p>Loading...</p>;
+  }
+
+  // Error state
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  // Not signed in
+  if (!session) {
+    return <p>Please sign in to view your profile.</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -113,17 +150,47 @@ const ProfileSection = () => {
             <div>
               <label className="block text-gray-700 text-sm">Full Name</label>
               <div className="flex items-center">
-                <span className="w-full px-4 py-2 border border-gray-300 rounded-lg">John Doe</span>
+                <span className="w-full px-4 py-2 border border-gray-300 rounded-lg">{userData.firstname}  {userData.lastname}</span>
                 <button className="ml-2 text-blue-500 hover:underline">Edit</button>
               </div>
             </div>
             <div>
               <label className="block text-gray-700 text-sm">Email</label>
               <div className="flex items-center">
-                <span className="w-full px-4 py-2 border border-gray-300 rounded-lg">example@gmail.com</span>
+                <span className="w-full px-4 py-2 border border-gray-300 rounded-lg">{session.user.email}</span>
                 <button className="ml-2 text-blue-500 hover:underline">Edit</button>
               </div>
             </div>
+            <div>
+
+            <label className="block text-gray-700 text-sm">Password</label>
+            <div className="flex items-center">
+              <input
+                type="password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                placeholder="••••••••"
+                disabled // Disable the input by default
+              />
+               <button
+                className="ml-2 text-blue-500 hover:underline"
+                onClick={() => {
+                  // Add logic to handle the edit functionality
+                  alert("Password editing is not yet implemented!");
+                }}
+              >
+                {/* <img
+                  src="." // Replace with the actual path to your PNG file
+                  alt="Edit"
+                  className="w-6 h-6" // Adjust size as needed
+                /> */}
+                Edit
+              </button>
+
+            </div>
+            <div className="mt-6 flex justify-center">
+      </div>
+          </div>
+
             <div>
               <label className="block text-gray-700 text-sm">Payment Method</label>
               <button
@@ -143,6 +210,18 @@ const ProfileSection = () => {
               </button>
             </div>
           </div>
+          <div className="mt-6 flex justify-center">
+            <Link
+              href="/api/auth/signout"
+              onClick={(e) => {
+                e.preventDefault();
+                signOut({ callbackUrl: "/" });
+              }}
+              className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition duration-200"
+            >
+              Sign Out
+            </Link>
+        </div>
         </section>
       </div>
 
@@ -160,12 +239,36 @@ const ProfileSection = () => {
                   placeholder="1234 5678 9123 4567"
                 />
               </div>
+              <div>
+                <label className="block text-gray-700 text-sm">Bank Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="Krungthai"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm">Card Type</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="Credits"
+                />
+              </div>
               <div className="mt-4">
                 <label className="block text-gray-700 text-sm">Expiry Date</label>
                 <input
                   type="text"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                   placeholder="MM/YY"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 text-sm">CVC</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  placeholder="321"
                 />
               </div>
               <div className="mt-4 flex justify-end space-x-4">
@@ -192,7 +295,7 @@ const ProfileSection = () => {
             <h3 className="text-xl font-bold mb-4">Add/Edit Address</h3>
             <form>
               <div>
-                <label className="block text-gray-700 text-sm">Street</label>
+                <label className="block text-gray-700 text-sm">Address</label>
                 <input
                   type="text"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
@@ -245,7 +348,6 @@ const ProfileSection = () => {
     </div>
   );
 };
-
 
 const App = () => {
     // Profile Section
