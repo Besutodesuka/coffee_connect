@@ -11,7 +11,7 @@ export async function POST(req) {
         console.log('Fuk1');
 
         if (!email || !newPassword) {
-            
+
             return NextResponse.json(
                 { message: 'Email and new password are required.' },
                 { status: 400 }

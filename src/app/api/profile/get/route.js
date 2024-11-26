@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from '../auth/[...nextauth]/route.js';
-import { connectMongoDB } from '/lib/mongodb';
-import User from '/models/user';
+import { authOptions } from "../../auth/[...nextauth]/route.js";
+import { connectMongoDB } from "/lib/mongodb";
+import User from "/models/user";
 
 export async function GET(req) {
   try {
@@ -16,21 +16,16 @@ export async function GET(req) {
 
     // If there's no session, return unauthorized
     if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Fetch user by email from the session
     const user = await User.findOne({ email: session.user.email }).lean();
+    console.log(user);
 
     // If no user is found, return not found
     if (!user) {
-      return NextResponse.json(
-        { error: "User not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     // Return the user data if found
@@ -43,9 +38,3 @@ export async function GET(req) {
     );
   }
 }
-
-
-
-
-
-
