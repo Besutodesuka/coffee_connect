@@ -30,7 +30,7 @@
     {
         "supplier_id": 3,
         "product_name": "Liberica",
-        "grade": 1,
+        "grade": 5,
         "quantity": 200,
         "price": 5.0,
         "measure_date": "2024-11-03",
@@ -58,7 +58,7 @@
     {
         "supplier_id": 5,
         "product_name": "Blue Mountain",
-        "grade": 1,
+        "grade": 4,
         "quantity": 25,
         "price": 25.0,
         "measure_date": "2024-11-05",
@@ -72,7 +72,7 @@
     {
         "supplier_id": 6,
         "product_name": "Geisha",
-        "grade": 2,
+        "grade": 5,
         "quantity": 150,
         "price": 8.5,
         "measure_date": "2024-11-06",
@@ -114,7 +114,7 @@
     {
         "supplier_id": 9,
         "product_name": "Catimor",
-        "grade": 1,
+        "grade": 4,
         "quantity": 60,
         "price": 22.0,
         "measure_date": "2024-11-09",
@@ -156,7 +156,7 @@
     {
         "supplier_id": 12,
         "product_name": "Pacamara",
-        "grade": 2,
+        "grade": 5,
         "quantity": 45,
         "price": 7.0,
         "measure_date": "2024-11-12",
@@ -184,7 +184,7 @@
     {
         "supplier_id": 14,
         "product_name": "Typica",
-        "grade": 2,
+        "grade": 5,
         "quantity": 90,
         "price": 2.0,
         "measure_date": "2024-11-14",
@@ -212,7 +212,7 @@
     {
         "supplier_id": 16,
         "product_name": "Yellow Bourbon",
-        "grade": 1,
+        "grade": 4,
         "quantity": 20,
         "price": 50.0,
         "measure_date": "2024-11-16",
@@ -226,7 +226,7 @@
     {
         "supplier_id": 17,
         "product_name": "SL28",
-        "grade": 2,
+        "grade": 4,
         "quantity": 100,
         "price": 7.5,
         "measure_date": "2024-11-17",
@@ -2718,7 +2718,7 @@
     {
         "supplier_id": 175,
         "product_name": "Liberica",
-        "grade": 2,
+        "grade": 5,
         "quantity": 48,
         "price": 44.37,
         "measure_date": "2024-07-04",
@@ -2732,7 +2732,7 @@
     {
         "supplier_id": 176,
         "product_name": "Kent",
-        "grade": 3,
+        "grade": 5,
         "quantity": 294,
         "price": 35.96,
         "measure_date": "2024-09-25",
