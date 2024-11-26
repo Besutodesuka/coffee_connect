@@ -34,7 +34,7 @@ function Navbar() {
             />
             </div>
 
-            <a href="/">
+            <a href="/cart">
                 <img
                     src="/Cart.svg"
                     alt="Cart"

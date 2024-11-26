@@ -56,6 +56,38 @@ const ProductDetail = ({ params }) => {
     setViewMode(mode); // Toggle between 'retail' and 'contract'
   };
 
+  const handleAddToCart = async () => {
+    if (!session?.user?.id) {
+      alert("You need to be logged in to add items to the cart.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session.user.id, // Assuming session includes user ID
+          productId: product._id,
+          quantity,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to add to cart");
+      const data = await res.json();
+      alert("Product added to cart successfully!");
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      alert("Failed to add to cart.");
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -94,21 +126,19 @@ const ProductDetail = ({ params }) => {
             {/* Purchase Options */}
             <div className="flex items-center gap-4 mt-4">
               <button
-                className={`px-4 py-2 rounded-lg border ${
-                  viewMode === "retail"
-                    ? "bg-orange-500 text-white"
-                    : "border-gray-600 text-gray-600"
-                }`}
+                className={`px-4 py-2 rounded-lg border ${viewMode === "retail"
+                  ? "bg-orange-500 text-white"
+                  : "border-gray-600 text-gray-600"
+                  }`}
                 onClick={() => handleViewModeChange("retail")}
               >
                 RETAIL PURCHASE
               </button>
               <button
-                className={`px-4 py-2 rounded-lg border ${
-                  viewMode === "contract"
-                    ? "bg-orange-500 text-white"
-                    : "border-gray-600 text-gray-600"
-                }`}
+                className={`px-4 py-2 rounded-lg border ${viewMode === "contract"
+                  ? "bg-orange-500 text-white"
+                  : "border-gray-600 text-gray-600"
+                  }`}
                 onClick={() => handleViewModeChange("contract")}
               >
                 CONTRACT
@@ -157,7 +187,10 @@ const ProductDetail = ({ params }) => {
                       +
                     </button>
                   </div>
-                  <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600">
+                  <button
+                    className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600"
+                    onClick={handleAddToCart}
+                  >
                     ADD TO CART
                   </button>
                   <button className="border border-gray-600 px-6 py-2 rounded-lg hover:bg-gray-100">
