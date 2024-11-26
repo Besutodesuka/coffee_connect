@@ -27,7 +27,7 @@ function Navbar() {
             <span>
               <strong>|</strong>
             </span>
-            <Link href="/" className="text-2xl font-bold">
+            <Link href="/auction" className="text-2xl font-bold">
               Auction
             </Link>
           </div>
