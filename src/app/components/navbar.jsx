@@ -15,13 +15,11 @@ function Navbar() {
               src="/Coffee_Connect.svg"
               alt="Profile"
             />
-            <Link href="/" className="text-base font-bold">Home</Link>
-            <span>|</span>
-            <Link href="/home" className="text-base font-bold">Retail Product</Link>
-            <span>|</span>
-            <Link href="/" className="text-base font-bold">Contact Product</Link>
-            <span>|</span>
-            <Link href="/" className="text-base font-bold">Auction</Link>
+            <Link href="/" className="text-2xl font-bold">Home</Link>
+            <span><strong>|</strong></span>
+            <Link href="/home" className="text-2xl font-bold">Marketplace</Link>
+            <span><strong>|</strong></span>
+            <Link href="/" className="text-2xl font-bold">Auction</Link>
           </div>
 
           <ul className="flex items-center space-x-5">
