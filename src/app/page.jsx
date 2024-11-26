@@ -11,7 +11,7 @@ export default function Home() {
   const { data: session } = useSession();
   const [products, setProducts] = useState([]);
   const hasFetchedProducts = useRef(false);
-  
+
   async function fetchProducts() {
     try {
       const res = await fetch("/api/product/search/queryall", {
@@ -87,24 +87,26 @@ export default function Home() {
         </div>
 
         <div>
-        <br></br>
-        <br></br>
+          <br></br>
+          <br></br>
           <h3 className="text-3xl px-10">
             <strong>Recommend Products</strong>
           </h3>
           {/* Product Grid */}
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products &&
-              products.slice(0,3).map((product, index) => (
-                <CoffeeCard
-                  key={index}
-                  _id={product._id}
-                  name={product.product_name}
-                  image="/Coffee_Product.svg"
-                  grade={product.grade}
-                  price={product.price}
-                />
-              ))}
+              products
+                .slice(0, 3)
+                .map((product, index) => (
+                  <CoffeeCard
+                    key={index}
+                    _id={product._id}
+                    name={product.product_name}
+                    image="/Coffee_Product.svg"
+                    grade={product.grade}
+                    price={product.price}
+                  />
+                ))}
             {/* Duplicate the ProductCard component with different data as needed */}
           </div>
           <br></br>
@@ -115,7 +117,7 @@ export default function Home() {
               </button>
             </div>
           </a>
-          <br></br>  
+          <br></br>
         </div>
 
         <Footer />
