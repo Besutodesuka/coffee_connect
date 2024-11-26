@@ -1,8 +1,8 @@
 // components/CoffeeCard.jsx
-import React from 'react';
-import Link from 'next/link'; // Import the Link component
-import StarRate from './Grade';
-import { stringify } from 'postcss';
+import React from "react";
+import Link from "next/link"; // Import the Link component
+import StarRate from "./Grade";
+import { stringify } from "postcss";
 
 function CoffeeCard({ _id, name, grade, price, image }) {
   // Convert product name to a URL-friendly format (lowercase and hyphens instead of spaces)
