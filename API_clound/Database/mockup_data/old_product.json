@@ -1,0 +1,472 @@
+[
+    { "supplier_id": 1, "product_name": "Arabica", "grade": 1, "quantity": 100, "price": 20.5, "measure_date": "2024-11-01", "exp_date": "2025-05-01" },
+    { "supplier_id": 2, "product_name": "Robusta", "grade": 2, "quantity": 50, "price": 10.0, "measure_date": "2024-11-02", "exp_date": "2025-05-02" },
+    { "supplier_id": 3, "product_name": "Liberica", "grade": 1, "quantity": 200, "price": 5.0, "measure_date": "2024-11-03", "exp_date": "2025-05-03" },
+    { "supplier_id": 4, "product_name": "Excelsa", "grade": 2, "quantity": 30, "price": 15.0, "measure_date": "2024-11-04", "exp_date": "2025-05-04" },
+    { "supplier_id": 5, "product_name": "Blue Mountain", "grade": 1, "quantity": 25, "price": 25.0, "measure_date": "2024-11-05", "exp_date": "2025-05-05" },
+    { "supplier_id": 6, "product_name": "Geisha", "grade": 2, "quantity": 150, "price": 8.5, "measure_date": "2024-11-06", "exp_date": "2025-05-06" },
+    { "supplier_id": 7, "product_name": "Sumatra", "grade": 3, "quantity": 70, "price": 12.0, "measure_date": "2024-11-07", "exp_date": "2025-05-07" },
+    { "supplier_id": 8, "product_name": "Bourbon", "grade": 2, "quantity": 40, "price": 18.0, "measure_date": "2024-11-08", "exp_date": "2025-05-08" },
+    { "supplier_id": 9, "product_name": "Catimor", "grade": 1, "quantity": 60, "price": 22.0, "measure_date": "2024-11-09", "exp_date": "2025-05-09" },
+    { "supplier_id": 10, "product_name": "Caturra", "grade": 3, "quantity": 80, "price": 3.5, "measure_date": "2024-11-10", "exp_date": "2025-05-10" },
+    { "supplier_id": 11, "product_name": "Maragogipe", "grade": 1, "quantity": 35, "price": 6.0, "measure_date": "2024-11-11", "exp_date": "2025-05-11" },
+    { "supplier_id": 12, "product_name": "Pacamara", "grade": 2, "quantity": 45, "price": 7.0, "measure_date": "2024-11-12", "exp_date": "2025-05-12" },
+    { "supplier_id": 13, "product_name": "Java", "grade": 1, "quantity": 110, "price": 4.5, "measure_date": "2024-11-13", "exp_date": "2025-05-13" },
+    { "supplier_id": 14, "product_name": "Typica", "grade": 2, "quantity": 90, "price": 2.0, "measure_date": "2024-11-14", "exp_date": "2025-05-14" },
+    { "supplier_id": 15, "product_name": "Colombian", "grade": 3, "quantity": 120, "price": 3.0, "measure_date": "2024-11-15", "exp_date": "2025-05-15" },
+    { "supplier_id": 16, "product_name": "Yellow Bourbon", "grade": 1, "quantity": 20, "price": 50.0, "measure_date": "2024-11-16", "exp_date": "2025-05-16" },
+    { "supplier_id": 17, "product_name": "SL28", "grade": 2, "quantity": 100, "price": 7.5, "measure_date": "2024-11-17", "exp_date": "2025-05-17" },
+    { "supplier_id": 18, "product_name": "SL34", "grade": 3, "quantity": 130, "price": 6.5, "measure_date": "2024-11-18", "exp_date": "2025-05-18" },
+    { "supplier_id": 19, "product_name": "Mundo Novo", "grade": 2, "quantity": 140, "price": 5.0, "measure_date": "2024-11-19", "exp_date": "2025-05-19" },
+    { "supplier_id": 20, "product_name": "Kenya AA", "grade": 1, "quantity": 60, "price": 8.0, "measure_date": "2024-11-20", "exp_date": "2025-05-20" },
+    {
+        "supplier_id": 19,
+        "product_name": "Arabica",
+        "grade": 2,
+        "quantity": 133,
+        "price": 34.22,
+        "measure_date": "2024-04-04",
+        "exp_date": "2025-06-02"
+    },
+    {
+        "supplier_id": 17,
+        "product_name": "Robusta",
+        "grade": 1,
+        "quantity": 225,
+        "price": 37.02,
+        "measure_date": "2024-03-11",
+        "exp_date": "2025-06-27"
+    },
+    {
+        "supplier_id": 2,
+        "product_name": "Liberica",
+        "grade": 2,
+        "quantity": 48,
+        "price": 44.37,
+        "measure_date": "2024-07-04",
+        "exp_date": "2025-04-27"
+    },
+    {
+        "supplier_id": 42,
+        "product_name": "Excelsa",
+        "grade": 3,
+        "quantity": 284,
+        "price": 27.94,
+        "measure_date": "2024-12-28",
+        "exp_date": "2025-12-27"
+    },
+    {
+        "supplier_id": 42,
+        "product_name": "Geisha",
+        "grade": 1,
+        "quantity": 33,
+        "price": 43.69,
+        "measure_date": "2024-09-05",
+        "exp_date": "2025-06-11"
+    },
+    {
+        "supplier_id": 39,
+        "product_name": "Bourbon",
+        "grade": 1,
+        "quantity": 205,
+        "price": 37.27,
+        "measure_date": "2024-08-18",
+        "exp_date": "2025-01-06"
+    },
+    {
+        "supplier_id": 7,
+        "product_name": "Typica",
+        "grade": 3,
+        "quantity": 187,
+        "price": 3.47,
+        "measure_date": "2024-05-21",
+        "exp_date": "2025-10-11"
+    },
+    {
+        "supplier_id": 32,
+        "product_name": "Caturra",
+        "grade": 1,
+        "quantity": 281,
+        "price": 9.23,
+        "measure_date": "2024-08-03",
+        "exp_date": "2025-12-21"
+    },
+    {
+        "supplier_id": 6,
+        "product_name": "Catimor",
+        "grade": 1,
+        "quantity": 124,
+        "price": 44.61,
+        "measure_date": "2024-04-27",
+        "exp_date": "2025-05-26"
+    },
+    {
+        "supplier_id": 48,
+        "product_name": "Maragogipe",
+        "grade": 3,
+        "quantity": 34,
+        "price": 13.01,
+        "measure_date": "2024-02-04",
+        "exp_date": "2025-11-26"
+    },
+    {
+        "supplier_id": 6,
+        "product_name": "SL28",
+        "grade": 2,
+        "quantity": 162,
+        "price": 8.18,
+        "measure_date": "2024-12-03",
+        "exp_date": "2025-10-14"
+    },
+    {
+        "supplier_id": 39,
+        "product_name": "SL34",
+        "grade": 1,
+        "quantity": 25,
+        "price": 15.78,
+        "measure_date": "2024-01-24",
+        "exp_date": "2025-08-19"
+    },
+    {
+        "supplier_id": 35,
+        "product_name": "Yellow Bourbon",
+        "grade": 3,
+        "quantity": 234,
+        "price": 49.57,
+        "measure_date": "2024-04-03",
+        "exp_date": "2025-12-13"
+    },
+    {
+        "supplier_id": 36,
+        "product_name": "Blue Mountain",
+        "grade": 1,
+        "quantity": 63,
+        "price": 41.84,
+        "measure_date": "2024-12-12",
+        "exp_date": "2025-09-04"
+    },
+    {
+        "supplier_id": 17,
+        "product_name": "Pacamara",
+        "grade": 2,
+        "quantity": 41,
+        "price": 36.94,
+        "measure_date": "2024-10-26",
+        "exp_date": "2025-04-22"
+    },
+    {
+        "supplier_id": 6,
+        "product_name": "Villa Sarchi",
+        "grade": 3,
+        "quantity": 173,
+        "price": 24.31,
+        "measure_date": "2024-05-21",
+        "exp_date": "2025-11-15"
+    },
+    {
+        "supplier_id": 38,
+        "product_name": "Catuai",
+        "grade": 3,
+        "quantity": 184,
+        "price": 28.55,
+        "measure_date": "2024-02-17",
+        "exp_date": "2025-09-25"
+    },
+    {
+        "supplier_id": 25,
+        "product_name": "Kent",
+        "grade": 3,
+        "quantity": 294,
+        "price": 35.96,
+        "measure_date": "2024-09-25",
+        "exp_date": "2025-06-17"
+    },
+    {
+        "supplier_id": 41,
+        "product_name": "Sumatra",
+        "grade": 2,
+        "quantity": 70,
+        "price": 2.68,
+        "measure_date": "2024-08-21",
+        "exp_date": "2025-03-16"
+    },
+    {
+        "supplier_id": 42,
+        "product_name": "Mocha",
+        "grade": 1,
+        "quantity": 17,
+        "price": 40.67,
+        "measure_date": "2024-03-17",
+        "exp_date": "2025-03-27"
+    },
+    {
+        "supplier_id": 4,
+        "product_name": "Arabica",
+        "grade": 2,
+        "quantity": 11,
+        "price": 25.94,
+        "measure_date": "2024-06-04",
+        "exp_date": "2025-05-04"
+    },
+    {
+        "supplier_id": 50,
+        "product_name": "Robusta",
+        "grade": 3,
+        "quantity": 119,
+        "price": 44.99,
+        "measure_date": "2024-03-04",
+        "exp_date": "2025-05-16"
+    },
+    {
+        "supplier_id": 25,
+        "product_name": "Liberica",
+        "grade": 1,
+        "quantity": 167,
+        "price": 25.15,
+        "measure_date": "2024-09-01",
+        "exp_date": "2025-03-07"
+    },
+    {
+        "supplier_id": 6,
+        "product_name": "Excelsa",
+        "grade": 1,
+        "quantity": 216,
+        "price": 24.4,
+        "measure_date": "2024-01-06",
+        "exp_date": "2025-07-27"
+    },
+    {
+        "supplier_id": 25,
+        "product_name": "Geisha",
+        "grade": 1,
+        "quantity": 261,
+        "price": 22.81,
+        "measure_date": "2024-04-04",
+        "exp_date": "2025-10-01"
+    },
+    {
+        "supplier_id": 49,
+        "product_name": "Bourbon",
+        "grade": 3,
+        "quantity": 115,
+        "price": 30.84,
+        "measure_date": "2024-04-21",
+        "exp_date": "2025-05-07"
+    },
+    {
+        "supplier_id": 38,
+        "product_name": "Typica",
+        "grade": 2,
+        "quantity": 131,
+        "price": 12.07,
+        "measure_date": "2024-08-23",
+        "exp_date": "2025-02-02"
+    },
+    {
+        "supplier_id": 14,
+        "product_name": "Caturra",
+        "grade": 2,
+        "quantity": 27,
+        "price": 9.17,
+        "measure_date": "2024-07-25",
+        "exp_date": "2025-06-19"
+    },
+    {
+        "supplier_id": 46,
+        "product_name": "Catimor",
+        "grade": 1,
+        "quantity": 172,
+        "price": 31.35,
+        "measure_date": "2024-05-20",
+        "exp_date": "2025-02-12"
+    },
+    {
+        "supplier_id": 23,
+        "product_name": "Maragogipe",
+        "grade": 1,
+        "quantity": 83,
+        "price": 30.62,
+        "measure_date": "2024-08-22",
+        "exp_date": "2025-08-19"
+    },
+    {
+        "supplier_id": 33,
+        "product_name": "SL28",
+        "grade": 1,
+        "quantity": 225,
+        "price": 45.53,
+        "measure_date": "2024-01-15",
+        "exp_date": "2025-02-14"
+    },
+    {
+        "supplier_id": 50,
+        "product_name": "SL34",
+        "grade": 1,
+        "quantity": 250,
+        "price": 46.14,
+        "measure_date": "2024-12-11",
+        "exp_date": "2025-04-17"
+    },
+    {
+        "supplier_id": 26,
+        "product_name": "Yellow Bourbon",
+        "grade": 3,
+        "quantity": 115,
+        "price": 6.4,
+        "measure_date": "2024-03-09",
+        "exp_date": "2025-05-04"
+    },
+    {
+        "supplier_id": 38,
+        "product_name": "Blue Mountain",
+        "grade": 3,
+        "quantity": 200,
+        "price": 21.13,
+        "measure_date": "2024-11-04",
+        "exp_date": "2025-01-25"
+    },
+    {
+        "supplier_id": 4,
+        "product_name": "Pacamara",
+        "grade": 1,
+        "quantity": 215,
+        "price": 26.76,
+        "measure_date": "2024-01-08",
+        "exp_date": "2025-01-24"
+    },
+    {
+        "supplier_id": 48,
+        "product_name": "Villa Sarchi",
+        "grade": 3,
+        "quantity": 162,
+        "price": 17.55,
+        "measure_date": "2024-03-19",
+        "exp_date": "2025-05-08"
+    },
+    {
+        "supplier_id": 25,
+        "product_name": "Catuai",
+        "grade": 2,
+        "quantity": 239,
+        "price": 38.58,
+        "measure_date": "2024-07-21",
+        "exp_date": "2025-08-27"
+    },
+    {
+        "supplier_id": 9,
+        "product_name": "Kent",
+        "grade": 1,
+        "quantity": 226,
+        "price": 45.85,
+        "measure_date": "2024-07-03",
+        "exp_date": "2025-05-02"
+    },
+    {
+        "supplier_id": 21,
+        "product_name": "Sumatra",
+        "grade": 1,
+        "quantity": 115,
+        "price": 38.87,
+        "measure_date": "2024-11-20",
+        "exp_date": "2025-04-26"
+    },
+    {
+        "supplier_id": 38,
+        "product_name": "Mocha",
+        "grade": 2,
+        "quantity": 41,
+        "price": 9.47,
+        "measure_date": "2024-07-27",
+        "exp_date": "2025-01-27"
+    },
+    {
+        "supplier_id": 25,
+        "product_name": "Arabica",
+        "grade": 3,
+        "quantity": 19,
+        "price": 45.61,
+        "measure_date": "2024-11-07",
+        "exp_date": "2025-12-08"
+    },
+    {
+        "supplier_id": 27,
+        "product_name": "Robusta",
+        "grade": 2,
+        "quantity": 16,
+        "price": 27.03,
+        "measure_date": "2024-04-23",
+        "exp_date": "2025-04-26"
+    },
+    {
+        "supplier_id": 47,
+        "product_name": "Liberica",
+        "grade": 2,
+        "quantity": 59,
+        "price": 36.82,
+        "measure_date": "2024-04-24",
+        "exp_date": "2025-05-14"
+    },
+    {
+        "supplier_id": 21,
+        "product_name": "Excelsa",
+        "grade": 1,
+        "quantity": 91,
+        "price": 30.36,
+        "measure_date": "2024-05-19",
+        "exp_date": "2025-04-01"
+    },
+    {
+        "supplier_id": 43,
+        "product_name": "Geisha",
+        "grade": 1,
+        "quantity": 215,
+        "price": 28.45,
+        "measure_date": "2024-06-20",
+        "exp_date": "2025-07-20"
+    },
+    {
+        "supplier_id": 15,
+        "product_name": "Bourbon",
+        "grade": 1,
+        "quantity": 14,
+        "price": 10.57,
+        "measure_date": "2024-07-12",
+        "exp_date": "2025-11-25"
+    },
+    {
+        "supplier_id": 26,
+        "product_name": "Typica",
+        "grade": 1,
+        "quantity": 93,
+        "price": 4.25,
+        "measure_date": "2024-06-22",
+        "exp_date": "2025-08-10"
+    },
+    {
+        "supplier_id": 27,
+        "product_name": "Caturra",
+        "grade": 3,
+        "quantity": 151,
+        "price": 48.42,
+        "measure_date": "2024-02-17",
+        "exp_date": "2025-01-27"
+    },
+    {
+        "supplier_id": 34,
+        "product_name": "Catimor",
+        "grade": 3,
+        "quantity": 139,
+        "price": 5.36,
+        "measure_date": "2024-12-03",
+        "exp_date": "2025-09-22"
+    },
+    {
+        "supplier_id": 36,
+        "product_name": "Maragogipe",
+        "grade": 1,
+        "quantity": 295,
+        "price": 27.57,
+        "measure_date": "2024-01-27",
+        "exp_date": "2025-10-28"
+    }
+  ]

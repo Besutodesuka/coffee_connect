@@ -1,14 +1,14 @@
 // components/CoffeeCard.jsx
-import React from 'react';
-import Link from 'next/link'; // Import the Link component
-import StarRate from './Grade';
+import React from "react";
+import Link from "next/link"; // Import the Link component
+import StarRate from "./Grade";
+import { stringify } from "postcss";
 
-function CoffeeCard({ name, grade, price, image }) {
+function CoffeeCard({ _id, name, grade, price, image }) {
   // Convert product name to a URL-friendly format (lowercase and hyphens instead of spaces)
-  const productNameSlug = name.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <Link href={`/ProductDetail/${productNameSlug}`} passHref>
+    <Link href={`/home/ProductDetail/${_id}`} passHref>
       <div className="max-w-sm mx-auto relative rounded-lg cursor-pointer">
         <div className="w-full h-auto bg-white rounded-[20px] border-2 border-[#d9d9d9] p-4 flex flex-col items-center">
           {image && (
@@ -36,15 +36,9 @@ function CoffeeCard({ name, grade, price, image }) {
             <StarRate score={grade} className="mx-3" />
           </div>
           <div className="mt-3 w-full flex justify-end">
-            <button
-              className="text-right text-black text-sm sm:text-[16px] font-normal font-['Public Sans']"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent event bubbling to Link click
-                alert('Added to cart'); // Placeholder functionality for add-to-cart
-              }}
-            >
+            < label className="text-right text-black text-sm sm:text-[16px] font-normal font-['Public Sans']" >
               Add to cart
-            </button>
+            </label>
           </div>
         </div>
       </div>
