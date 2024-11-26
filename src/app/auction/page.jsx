@@ -94,7 +94,7 @@ export default function Home() {
 
   async function fetchProducts() {
     try {
-      const res = await fetch("/api/product/search/queryall", {
+      const res = await fetch("/api/product/search/auction", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -110,8 +110,8 @@ export default function Home() {
 
       if (Array.isArray(data)) {
         setProducts(data);
-      } else if (Array.isArray(data.products)) {
-        setProducts(data.products);
+      } else if (Array.isArray(data.Auction)) {
+        setProducts(data.Auction);
       } else {
         throw new Error("invalid error type");
       }
@@ -504,7 +504,12 @@ export default function Home() {
         <div className="w-full md:w-3/4 lg:w-4/5 px-4">
           <ProductsGrid products={products} />
         </div>
-      </div>
+        <div className="flex justify-center items-center w-full my-20">
+            <div className="text-center text-2xl md:text-4xl lg:text-5xl font-bold">
+                Coming Soon ...
+            </div>
+        </div>
+    </div>
       <Footer />
     </div>
   );
