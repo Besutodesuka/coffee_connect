@@ -76,7 +76,7 @@ const CartPage = () => {
 
       // Update the UI by filtering out the removed item
       setCartItems((prevItems) => prevItems.filter((item) => item._id !== id));
-
+      
       const data = await response.json();
       handleUpdateCart();
 
@@ -90,7 +90,7 @@ const CartPage = () => {
     if (cartItems.length > 0 && userId) {
       handleUpdateCart();
     }
-  }, [cartItems]);
+  }, [cartItems]); 
 
 
   const handleQuantityChange = (id, change) => {
@@ -209,9 +209,9 @@ const CartPage = () => {
                   <span>${calculateSubtotal()}</span>
                 </div>
                 <a href="/payment">
-                  <button className="bg-orange-500 text-white px-6 py-2 rounded-lg w-full hover:bg-orange-600">
-                    Make Payment
-                  </button>
+                <button className="bg-orange-500 text-white px-6 py-2 rounded-lg w-full hover:bg-orange-600">
+                  Make Payment
+                </button>
                 </a>
               </div>
             </div>
