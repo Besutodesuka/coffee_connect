@@ -42,12 +42,12 @@ function Navbar() {
               />
             </div>
 
-            <a href="/">
-              <img
-                src="/Cart.svg"
-                alt="Cart"
-                className="w-6 h-6 object-contain cursor-pointer mr-3"
-              />
+            <a href="/cart">
+                <img
+                    src="/Cart.svg"
+                    alt="Cart"
+                    className="w-6 h-6 object-contain cursor-pointer mr-3"
+                />
             </a>
             {/* When user is logged in */}
             {session && (

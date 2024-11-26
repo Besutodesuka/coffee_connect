@@ -3,9 +3,34 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
 require("dotenv").config({ path: "../.env" }); // Load environment variables
-
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 // MongoDB connection URI
 // const dbURI = process.env.MONGO_URI || "mongodb://admin:admin@localhost:27017/coffee?authSource=admin";
+const auctionSchema = new mongoose.Schema(
+  {
+    productid: {
+      type: Number,
+      required: true
+    },
+    StartDate: {
+      type: Date,
+      required: true
+    },
+    EndDate: {
+      type: Date,
+      required: true
+    },
+    CurrentBid: {
+      type: Number,
+      required: true,
+      min: 0 // Assuming the bid cannot be negative
+    }
+  },
+  { timestamps: true }
+);
+
+auctionSchema.plugin(AutoIncrement, { inc_field: 'auctionid' });
+
 
 // Define Mongoose schemas
 const supplierSchema = new mongoose.Schema(
@@ -31,6 +56,8 @@ const supplierSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+supplierSchema.plugin(AutoIncrement, { inc_field: 'supplier_id' });
 
 const productSchema = new mongoose.Schema(
   {
@@ -72,24 +99,25 @@ const productSchema = new mongoose.Schema(
   },
   bean_type: {
       type: String,
-      enum: ['Arabica', 'Robusta'], // Limit values to specific types
       required: true
   },
   region: {
       type: String,
-      enum: ['Northern', 'Northeastern', 'Eastern', 'Central', 'Western', 'Southern'], // Limit to specified regions
       required: true
   },
   soil_type: {
       type: String,
-      enum: ['Peat-based Soil', 'Coconut Coir', 'Compost', 'Sand-Based Soil'], // Limit to specified soil types
       required: true
   }
 },
 { timestamps: true }
 );
+
+productSchema.plugin(AutoIncrement, { inc_field: 'productid' });
+
 const Supplier = mongoose.model("Supplier", supplierSchema);
 const Product = mongoose.model("Product", productSchema);
+const Auction = mongoose.model("Auction", auctionSchema);
 
 async function importData() {
   try {
@@ -116,6 +144,13 @@ async function importData() {
     await Product.deleteMany({});
     await Product.insertMany(productData);
     console.log("Product data imported successfully.");
+
+    // Import product data
+    const auctionFilePath = path.join(process.cwd(), "mockup_data", "auction.json");
+    const auctionData = JSON.parse(fs.readFileSync(auctionFilePath, "utf8"));
+    await Auction.deleteMany({});
+    await Auction.insertMany(auctionData);
+    console.log("Auction data imported successfully.");
 
     mongoose.connection.close();
   } catch (error) {

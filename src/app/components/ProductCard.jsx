@@ -36,15 +36,9 @@ function CoffeeCard({ _id, name, grade, price, image }) {
             <StarRate score={grade} className="mx-3" />
           </div>
           <div className="mt-3 w-full flex justify-end">
-            <button
-              className="text-right text-black text-sm sm:text-[16px] font-normal font-['Public Sans']"
-              onClick={(e) => {
-                e.stopPropagation(); // Prevent event bubbling to Link click
-                alert("Added to cart"); // Placeholder functionality for add-to-cart
-              }}
-            >
+            < label className="text-right text-black text-sm sm:text-[16px] font-normal font-['Public Sans']" >
               Add to cart
-            </button>
+            </label>
           </div>
         </div>
       </div>
